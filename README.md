@@ -61,3 +61,7 @@ Assessing research feasibility
 Structuring the research paper
 
 This creates a fragmented research workflow.
+
+Our Problem
+
+How can we build an intelligent research platform that guides a researcher from an initial idea to a structured and evidence-supported research plan?
