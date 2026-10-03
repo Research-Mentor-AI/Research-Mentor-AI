@@ -116,3 +116,34 @@ What datasets are commonly used?
 
 What approaches have already been explored?
 
+2. 🧩 Research Gap Detector
+
+The Gap Detector analyzes existing research and attempts to identify areas where further research may be required.
+
+It analyzes:
+
+Existing methodologies
+
+Limitations
+
+Unsolved problems
+
+Dataset limitations
+
+Performance limitations
+
+Future work suggested by researchers
+
+Example
+
+Existing Research
+       ↓
+Paper Analysis
+       ↓
+Limitations
+       ↓
+Unsolved Problems
+       ↓
+Potential Research Gaps
+
+Users can select relevant gaps for further analysis.
