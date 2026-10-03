@@ -402,3 +402,103 @@ Main Difference
 A general LLM primarily works through conversation.
 
 Research Mentor AI focuses on a structured research process.
+
+🆚 Research Mentor AI vs Existing Research Tools
+
+Research Mentor AI is designed to combine several research activities into one workflow.
+
+Tool Category
+
+Main Purpose
+
+General LLMs
+
+General reasoning and generation
+
+Academic Search Engines
+
+Finding research papers
+
+Citation/Research Platforms
+
+Literature discovery and analysis
+
+Paper Writing Tools
+
+Writing assistance
+
+Research Mentor AI
+
+End-to-end research workflow
+
+The goal is not to compete with every existing tool individually.
+
+Instead, Research Mentor AI aims to connect multiple research activities into a single guided process.
+
+🛠️ Technology Stack
+
+Frontend
+
+React.js
+
+JavaScript / TypeScript
+
+HTML5
+
+CSS3
+
+Tailwind CSS
+
+Vite
+
+Backend
+
+Planned/extendable architecture:
+
+Node.js / Express
+
+Python
+
+FastAPI
+
+AI / Machine Learning
+
+Potential components include:
+
+Large Language Models
+
+NLP
+
+Embedding models
+
+Vector databases
+
+Retrieval-Augmented Generation (RAG)
+
+Semantic similarity
+
+Multi-agent systems
+
+Research Data Sources
+
+Potential sources include:
+
+arXiv
+
+Semantic Scholar
+
+Papers With Code
+
+Research datasets
+
+Academic APIs
+
+Deployment
+
+Frontend:
+
+Vercel / Netlify
+
+Backend:
+
+Render / Railway / Cloud infrastructure
