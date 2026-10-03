@@ -288,3 +288,117 @@ This makes the system closer to a research workflow assistant rather than a simp
 ┌───────────────────────┐
 │     Paper Writer      │
 │ Generate Paper Draft  │
+
+
+🤖 Multi-Agent Architecture
+
+Research Mentor AI follows a specialized-agent architecture.
+
+                    ┌─────────────────────┐
+                    │       User          │
+                    └──────────┬──────────┘
+                               ↓
+                    ┌─────────────────────┐
+                    │ Research Mentor AI  │
+                    │     Interface        │
+                    └──────────┬──────────┘
+                               ↓
+             ┌──────────────────────────────────┐
+             │        Research Orchestrator     │
+             └────────────────┬─────────────────┘
+                              ↓
+       ┌─────────────┬────────┼─────────┬─────────────┐
+       ↓             ↓        ↓         ↓             ↓
+   Explorer      Gap Agent  Novelty   Experiment   Paper
+                             Agent       Agent      Writer
+       ↓             ↓        ↓         ↓             ↓
+       └─────────────┴────────┴─────────┴─────────────┘
+                              ↓
+                    Research Knowledge
+                              ↓
+                  Papers / Datasets /
+                 Citations / Results
+
+🆚 How Is Research Mentor AI Different From ChatGPT?
+
+Research Mentor AI is not intended to replace general-purpose LLMs.
+
+Instead, it focuses on the research workflow.
+
+Capability
+
+General LLM
+
+Research Mentor AI
+
+General questions
+
+✅
+
+✅
+
+Research paper discovery
+
+Partial
+
+✅
+
+Research gap analysis
+
+General
+
+Specialized
+
+Novelty analysis
+
+General
+
+Specialized
+
+Experiment planning
+
+General
+
+Specialized
+
+Dataset recommendations
+
+General
+
+Research-focused
+
+Baseline selection
+
+General
+
+Research-focused
+
+Research workflow
+
+Conversation-based
+
+Structured pipeline
+
+Specialized research agents
+
+❌/Limited
+
+✅
+
+Paper writing
+
+✅
+
+✅
+
+Research project tracking
+
+Limited
+
+✅
+
+Main Difference
+
+A general LLM primarily works through conversation.
+
+Research Mentor AI focuses on a structured research process.
