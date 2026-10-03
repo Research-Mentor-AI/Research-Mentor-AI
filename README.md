@@ -35,3 +35,29 @@ Write and organize the research paper
 Doing all of this manually can take significant time.
 
 Research Mentor AI brings these activities into one integrated platform.
+
+🎯 Problem Statement
+
+Students and early-stage researchers often struggle to convert a general research idea into a well-defined research project.
+
+Existing AI tools can generate explanations and text, but researchers still need to manually perform tasks such as:
+
+Finding relevant papers
+
+Comparing existing approaches
+
+Identifying research gaps
+
+Checking whether an idea already exists
+
+Selecting datasets
+
+Choosing baselines
+
+Selecting evaluation metrics
+
+Assessing research feasibility
+
+Structuring the research paper
+
+This creates a fragmented research workflow.
