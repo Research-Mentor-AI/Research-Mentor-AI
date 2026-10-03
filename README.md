@@ -232,3 +232,59 @@ Conclusion
 Future Work
 
 The system can also help organize citations and research references.
+
+
+6. 👨‍🏫 AI Research Mentor
+
+Research Mentor AI combines the different agents into a single research workflow.
+
+Instead of asking:
+
+"Write me a research paper."
+
+the researcher can progressively develop the research:
+
+Idea
+ ↓
+Literature
+ ↓
+Research Gap
+ ↓
+Novelty
+ ↓
+Experiment
+ ↓
+Paper
+
+This makes the system closer to a research workflow assistant rather than a simple text-generation chatbot.
+
+🔄 Complete Workflow
+
+┌───────────────────────┐
+│    Research Idea      │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│   Research Explorer   │
+│  Find Relevant Papers │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│   Gap Detector        │
+│ Find Research Gaps    │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│   Novelty Evaluator   │
+│ Compare Existing Work │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│   Experiment Planner  │
+│ Dataset + Baselines   │
+│ + Evaluation Metrics  │
+└───────────┬───────────┘
+            ↓
+┌───────────────────────┐
+│     Paper Writer      │
+│ Generate Paper Draft  │
