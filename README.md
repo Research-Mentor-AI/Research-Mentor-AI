@@ -65,3 +65,24 @@ This creates a fragmented research workflow.
 Our Problem
 
 How can we build an intelligent research platform that guides a researcher from an initial idea to a structured and evidence-supported research plan?
+
+
+💡 Our Solution
+
+Research Mentor AI provides a multi-agent research workflow.
+
+The system divides the research process into specialized stages:
+
+Research Idea
+     ↓
+Explore Existing Research
+     ↓
+Detect Research Gaps
+     ↓
+Evaluate Novelty
+     ↓
+Design Experiments
+     ↓
+Write Research Paper
+
+Each stage is handled by a specialized AI agent.
