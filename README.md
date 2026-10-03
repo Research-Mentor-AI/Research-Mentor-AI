@@ -86,3 +86,33 @@ Design Experiments
 Write Research Paper
 
 Each stage is handled by a specialized AI agent.
+
+
+🚀 Key Features
+
+1. 🔎 Research Explorer
+
+The Research Explorer helps users discover relevant academic research.
+
+It can search sources such as:
+
+arXiv
+
+Semantic Scholar
+
+Papers With Code
+
+Other academic research sources
+
+It helps answer:
+
+What research already exists?
+
+What methods are currently being used?
+
+Which papers are highly relevant?
+
+What datasets are commonly used?
+
+What approaches have already been explored?
+
