@@ -5,3 +5,33 @@ An AI-powered research assistant that helps researchers move from a research ide
 Research Mentor AI is a multi-agent AI research platform designed to act like a virtual research mentor. It helps students, researchers, and academics explore research topics, identify research gaps, evaluate novelty, design experiments, and prepare research papers.
 
 Instead of simply generating answers like a traditional chatbot, Research Mentor AI follows a structured research workflow and separates different research tasks into specialized AI agents.
+
+🌟 Why Research Mentor AI?
+
+Starting research can be difficult.
+
+A researcher often has to:
+
+Search through hundreds of research papers
+
+Understand existing research
+
+Identify limitations in previous work
+
+Find unexplored research gaps
+
+Determine whether an idea is actually novel
+
+Select suitable datasets
+
+Choose appropriate baselines
+
+Decide evaluation metrics
+
+Estimate research feasibility
+
+Write and organize the research paper
+
+Doing all of this manually can take significant time.
+
+Research Mentor AI brings these activities into one integrated platform.
