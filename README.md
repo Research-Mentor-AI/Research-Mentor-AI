@@ -147,3 +147,88 @@ Unsolved Problems
 Potential Research Gaps
 
 Users can select relevant gaps for further analysis.
+
+3. 🧠 Novelty Checker
+
+The Novelty Evaluator helps determine whether a proposed research idea appears similar to existing work.
+
+It compares the proposed idea with related research and provides:
+
+Similar papers
+
+Similar approaches
+
+Existing solutions
+
+Similarity information
+
+Novelty assessment
+
+Important
+
+The novelty result is intended as research assistance, not as a guarantee that an idea has never been published.
+
+Researchers should still perform a proper literature review.
+
+4. 🧪 Experiment Planner
+
+Once a research direction has been selected, Research Mentor AI helps design an experimental plan.
+
+It can suggest:
+
+Datasets
+
+Potential datasets suitable for the research problem.
+
+Baselines
+
+Existing algorithms or approaches that should be used for comparison.
+
+Evaluation Metrics
+
+Appropriate metrics based on the research problem.
+
+For example:
+
+Classification
+→ Accuracy
+→ Precision
+→ Recall
+→ F1 Score
+→ ROC-AUC
+
+Regression
+→ MAE
+→ MSE
+→ RMSE
+→ R²
+
+The goal is to help researchers create a more structured experimental methodology.
+
+5. ✍️ Paper Writer
+
+The Paper Writer helps researchers structure and prepare research documents.
+
+It can assist with sections such as:
+
+Title
+
+Abstract
+
+Introduction
+
+Related Work
+
+Methodology
+
+Experimental Setup
+
+Results
+
+Discussion
+
+Conclusion
+
+Future Work
+
+The system can also help organize citations and research references.
