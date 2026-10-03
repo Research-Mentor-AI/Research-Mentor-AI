@@ -502,3 +502,39 @@ Vercel / Netlify
 Backend:
 
 Render / Railway / Cloud infrastructure
+
+🖥️ Application Pages
+
+The current interface contains:
+
+🏠 Home
+
+Introduces Research Mentor AI and its purpose.
+
+🔎 Explore
+
+Discover relevant research and papers.
+
+🧩 Research Gaps
+
+Identify and analyze potential research gaps.
+
+🧠 Novelty Check
+
+Analyze similarity between a proposed idea and existing research.
+
+🧪 Experiment Plan
+
+Plan datasets, baselines, and evaluation metrics.
+
+✍️ Paper Writer
+
+Assist with research paper creation.
+
+👨‍🏫 Mentors
+
+Research guidance and mentoring functionality.
+
+📁 My Projects
+
+Manage research projects and monitor progress.
