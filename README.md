@@ -787,3 +787,29 @@ Our vision is to create an AI-powered research ecosystem where researchers can m
               ┌─────────────────┐
               │   Researcher    │
               └─────────────────┘
+
+              👥 Team
+
+Research Mentor AI Team
+
+A collaborative student project focused on combining:
+
+Artificial Intelligence
+
+Large Language Models
+
+Natural Language Processing
+
+Multi-Agent Systems
+
+Research Automation
+
+Full-Stack Web Development
+
+📌 Project Status
+
+🚧 Currently under active development
+
+The current version focuses on the frontend experience and research workflow. Backend AI agents, research APIs, advanced retrieval, and automated research analysis can be progressively integrated.
+
+
