@@ -538,3 +538,252 @@ Research guidance and mentoring functionality.
 📁 My Projects
 
 Manage research projects and monitor progress.
+
+📊 Research Pipeline
+
+The platform represents research progress using a pipeline:
+
+EXPLORE
+   ↓
+GAPS
+   ↓
+NOVELTY
+   ↓
+EXPERIMENT PLAN
+   ↓
+WRITE
+
+This provides researchers with a clear progression from idea → research → execution → documentation.
+
+🎓 Target Users
+
+Research Mentor AI can be useful for:
+
+Undergraduate students
+
+Postgraduate students
+
+PhD researchers
+
+Academic researchers
+
+Research interns
+
+University research groups
+
+Faculty members
+
+R&D teams
+
+💰 Business Model
+
+Research Mentor AI can potentially use a freemium SaaS model.
+
+🆓 Free Plan
+
+Possible features:
+
+Limited paper searches
+
+Basic gap analysis
+
+Limited projects
+
+Basic AI assistance
+
+🚀 Pro Plan
+
+Possible features:
+
+Unlimited research projects
+
+Advanced research analysis
+
+Higher AI usage limits
+
+Advanced novelty analysis
+
+Advanced experiment planning
+
+Citation assistance
+
+🏢 University / Enterprise
+
+Institutions could receive:
+
+Team collaboration
+
+Research dashboards
+
+Private knowledge bases
+
+Institution-specific datasets
+
+Administrative controls
+
+Higher usage limits
+
+📈 Future Scope
+
+Future versions could include:
+
+🔬 Advanced Literature Review
+
+Automatically create structured literature reviews from large collections of papers.
+
+🧠 Knowledge Graph
+
+Build relationships between:
+
+Papers
+ ↓
+Authors
+ ↓
+Methods
+ ↓
+Datasets
+ ↓
+Research Problems
+ ↓
+Research Gaps
+
+📚 Citation Verification
+
+Automatically verify whether generated claims are supported by cited research.
+
+🧪 Automated Experimentation
+
+Connect with:
+
+Google Colab
+
+Kaggle
+
+Cloud GPUs
+
+ML experiment platforms
+
+to execute experiments.
+
+📊 Research Dashboard
+
+Track:
+
+Papers analyzed
+
+Gaps discovered
+
+Experiments completed
+
+Citations
+
+Research progress
+
+🤖 Local AI
+
+Integration with models such as:
+
+Ollama
+
+Llama
+
+Mistral
+
+Other open-source LLMs
+
+could allow researchers to run parts of the system locally.
+
+🔐 Responsible AI
+
+Research Mentor AI should be treated as a research assistance system, not an authoritative academic decision-maker.
+
+Researchers should verify:
+
+Research papers
+
+Citations
+
+Dataset licenses
+
+Experimental results
+
+Novelty claims
+
+Generated content
+
+before using them in academic publications.
+
+📂 Project Structure
+
+Research-Mentor-AI/
+│
+├── research-mentor-ai-ui/
+│   │
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── assets/
+│   │   ├── App.jsx
+│   │   └── main.jsx
+│   │
+│   ├── package.json
+│   ├── vite.config.js
+│   └── README.md
+│
+└── README.md
+
+⚙️ Installation
+
+1. Clone the Repository
+
+git clone https://github.com/Research-Mentor-AI/Research-Mentor-AI.git
+
+2. Navigate to the UI
+
+cd Research-Mentor-AI/research-mentor-ai-ui
+
+3. Install Dependencies
+
+npm install
+
+4. Start Development Server
+
+npm run dev
+
+The application will then be available on the local development server shown by Vite.
+
+🧪 Development
+
+To create a production build:
+
+npm run build
+
+To preview the production build:
+
+npm run preview
+
+🔮 Vision
+
+Our vision is to create an AI-powered research ecosystem where researchers can move from a simple idea to a scientifically structured research project with less friction.
+
+                 RESEARCH IDEA
+                       ↓
+              ┌─────────────────┐
+              │ Research Mentor │
+              │       AI        │
+              └────────┬────────┘
+                       ↓
+              Literature Review
+                       ↓
+                Research Gaps
+                       ↓
+                  Novelty
+                       ↓
+              Experiment Design
+                       ↓
+                Research Paper
+                       ↓
+              ┌─────────────────┐
+              │   Researcher    │
+              └─────────────────┘
