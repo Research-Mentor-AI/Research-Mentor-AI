@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { AlertTriangle, BookOpen, Brain, CircleHelp, Database, Download, ExternalLink, FlaskConical, Globe2, Loader2, Search, Sparkles, Target, Trophy } from 'lucide-react';
 import { SectionLabel, PageHero, Progress, StatStrip } from '../components/ui';
 import { api } from '../api/client';
+import { usePersist } from '../lib/persist';
 import { csvCell, download, fmtDate } from '../lib/download';
 
 const GUIDE = { what: 'Turns a rough idea into a clear research brief. Describe your problem in plain words and Explore tells you the domain, objectives, research questions, datasets and methods, and lists the closest real published papers.', steps: [['Describe your problem', 'Write what you want to research in a few sentences.'], ['The AI analyses it', 'It finds your research domain, objectives and questions.'], ['We find real papers', 'Published papers are retrieved and scored for similarity.'], ['You get a research brief', 'Review the analysis, then load more papers if you need them.']] };
@@ -12,8 +13,8 @@ const Chips = ({ items }) => items.length ? <div className="concepts">{items.map
 const STEPS = ['Reading your problem statement', 'Identifying the research domain', 'Searching published papers', 'Scoring papers for similarity'];
 
 export function Explore({ initialPs = '' }) {
-  const [ps, setPs] = useState(initialPs); const [stage, setStage] = useState(-1); const [result, setResult] = useState(null); const [error, setError] = useState('');
-  const [papers, setPapers] = useState([]); const [loadingMore, setLoadingMore] = useState(false); const [moreError, setMoreError] = useState('');
+  const [ps, setPs] = usePersist('explore:ps', initialPs); const [stage, setStage] = useState(-1); const [result, setResult] = usePersist('explore:result', null); const [error, setError] = useState('');
+  const [papers, setPapers] = usePersist('explore:papers', []); const [loadingMore, setLoadingMore] = useState(false); const [moreError, setMoreError] = useState('');
   const [filter, setFilter] = useState('All'); const [year, setYear] = useState('All');
   const thinking = stage >= 0;
 

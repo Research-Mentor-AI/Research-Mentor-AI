@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Copy, Download, FileText, Lightbulb, Plus, ShieldCheck, Sparkles, X } from 'lucide-react';
 import { PageHero } from '../components/ui';
 import { api } from '../api/client';
+import { usePersist } from '../lib/persist';
 
 const GUIDE = { what: 'Drafts your research paper section by section. Tell us what you know, choose the sections you want, and get a first draft you can edit.', steps: [["Choose your sections", "Pick from the standard sections or add your own."], ["Share what you know", "Title, research summary, gap, method, dataset, results and references."], ["We draft each section", "You see which details are still missing for each section."], ["You edit and copy", "Check every claim and citation, then copy or export."]] };
 
@@ -30,8 +31,8 @@ const TIPS = {
 };
 
 export function Writer({ notify }) {
-  const [v, setV] = useState({}); const [picked, setPicked] = useState(DEFAULT_SECTIONS); const [custom, setCustom] = useState('');
-  const [texts, setTexts] = useState(null); const [tab, setTab] = useState(DEFAULT_SECTIONS[0]);
+  const [v, setV] = usePersist('writer:fields', {}); const [picked, setPicked] = usePersist('writer:sections', DEFAULT_SECTIONS); const [custom, setCustom] = useState('');
+  const [texts, setTexts] = usePersist('writer:texts', null); const [tab, setTab] = usePersist('writer:tab', DEFAULT_SECTIONS[0]);
   const g = k => (v[k] || '').trim();
   const toggle = s => setPicked(p => p.includes(s) ? p.filter(x => x !== s) : [...p, s]);
   const addCustom = () => { const s = custom.trim(); if (s && !picked.includes(s)) setPicked([...picked, s]); setCustom(''); };

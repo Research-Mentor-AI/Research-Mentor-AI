@@ -11,16 +11,12 @@ const principles = [
   ['The student decides', 'We draft and suggest. You verify, edit and own the final work.'],
   ['Simple to start', 'Type your idea in plain words. No setup, no jargon.']
 ];
-const stack = ['React', 'FastAPI', 'Large language models', 'Vector search over papers', 'PostgreSQL', 'Multi-agent workflow'];
 
 export function AboutSection() {
   return <section className="landing-section about-section" id="about">
     <div className="section-intro"><span>ABOUT US</span><h2>A research guide for students who do not know where to start.</h2></div>
     <p className="about-lead">Research Mentor AI is a student-built project. It takes a student from a rough idea to a defensible research paper: finding related work, checking how new the idea is, spotting gaps, planning experiments and drafting the paper. Every step stays tied to real published research, and a human mentor is one click away.</p>
     <div className="about-cards">{cards.map(([Icon, t, d]) => <article key={t}><span className="about-ic"><Icon size={20} /></span><h3>{t}</h3><p>{d}</p></article>)}</div>
-    <div className="about-split">
-      <div><h3 className="about-h"><ShieldCheck size={18} /> What we believe</h3>{principles.map(([t, d]) => <div className="belief" key={t}><strong>{t}</strong><span>{d}</span></div>)}</div>
-      <div><h3 className="about-h">Tech stack</h3><p className="about-note">The platform is designed around these building blocks.</p><div className="stack-chips">{stack.map(s => <span key={s}>{s}</span>)}</div></div>
-    </div>
+    <div className="panel-dark about-beliefs"><h3 className="about-h"><ShieldCheck size={20} /> What we believe</h3><div className="belief-grid">{principles.map(([t, d]) => <div className="belief" key={t}><strong>{t}</strong><span>{d}</span></div>)}</div></div>
   </section>;
 }

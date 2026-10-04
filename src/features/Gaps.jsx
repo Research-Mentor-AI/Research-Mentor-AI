@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight, Check, CheckCircle2, ExternalLink, Lightbulb, Quote, UploadCloud, X } from 'lucide-react';
 import { SectionLabel, PageHero, Progress, StatStrip } from '../components/ui';
 import { api } from '../api/client';
+import { clearPersist } from '../lib/persist';
 
 const GUIDE = { what: 'Finds what a research paper left unsolved. Upload a paper and get a list of gaps. Each gap is explained in plain words and backed by evidence: exact quotes from your paper and related papers that support it. Select the gaps you want to solve and they carry over to the Experiment plan.', steps: [['Upload a paper', 'Add a PDF or DOCX of the paper you want to build on.'], ['The AI reads it', 'It finds limitations and open problems, and quotes the exact lines.'], ['We check other papers', 'Related papers are searched and kept only if they truly support the gap.'], ['You select what to solve', 'Chosen gaps go straight into your Experiment plan.']] };
 const STEPS = ['Reading the paper', 'Finding limitations', 'Checking related papers', 'Ranking the gaps'];
@@ -12,7 +13,7 @@ export function Gaps({ selectedGaps, setSelectedGaps, result, setResult, file, s
   const list = result ? result.gaps : [];
   const toggle = (g) => setSelectedGaps(prev => prev.some(x => x.id === g.id) ? prev.filter(x => x.id !== g.id) : [...prev, g]);
   const find = async () => {
-    setBusy(true); setError(''); setResult(null); setSelectedGaps([]); setStage(0);
+    setBusy(true); setError(''); setResult(null); setSelectedGaps([]); clearPersist('experiment'); setStage(0);
     const t = window.setInterval(() => setStage(s => Math.min(s + 1, STEPS.length - 1)), 7000);
     try { setResult(await api.gaps.detect(file)); } catch (e) { setError(e.message); } finally { window.clearInterval(t); setBusy(false); }
   };

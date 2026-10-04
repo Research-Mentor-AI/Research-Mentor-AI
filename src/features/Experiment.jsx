@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { AlertTriangle, ArrowRight, CheckCircle2, Database, Download, ExternalLink, FlaskConical, GitBranch, Lightbulb, Target, Wrench, BarChart3, BookOpen } from 'lucide-react';
 import { SectionLabel, PageHero, Progress } from '../components/ui';
 import { api } from '../api/client';
+import { usePersist } from '../lib/persist';
 import { download } from '../lib/download';
 
 const GUIDE = { what: 'Turns the gaps you selected into a complete experiment you can run. For every gap you get a plain explanation of how to overcome it, a step-by-step plan from data to results, and the datasets, baselines, tools, metrics and reading material to use.', steps: [['Receive your selected gaps', 'Gaps chosen in Research gaps appear here.'], ['Read how to overcome each gap', 'A short explanation in plain words.'], ['Follow the end-to-end plan', 'Phases from data preparation to reporting.'], ['Use the resources', 'Datasets, baselines, tools, metrics and papers to read.']] };
@@ -21,23 +22,24 @@ function toMarkdown(gaps, plans) {
 }
 
 export function Experiment({ selectedGaps, onNavigate }) {
-  const [plans, setPlans] = useState({}); const [loading, setLoading] = useState(false); const [error, setError] = useState('');
-  useEffect(() => {
-    if (!selectedGaps.length) return undefined;
-    let live = true; setLoading(true); setError(''); setPlans({});
-    const slim = selectedGaps.map(({ title, explanation, done, limit, improve, search_query }) => ({ title, explanation, done, limit, improve, search_query }));
-    api.experiment.plan(slim).then(r => live && setPlans(r.plans)).catch(e => live && setError(e.message)).finally(() => live && setLoading(false));
-    return () => { live = false; };
-  }, [selectedGaps]);
-  const ready = Object.values(plans).some(p => !p.error);
+  const [plans, setPlans] = usePersist('experiment:plans', {});
+  const [loading, setLoading] = useState(false); const [error, setError] = useState('');
+  const build = (gaps) => {
+    const slim = gaps.map(({ title, explanation, done, limit, improve, search_query }) => ({ title, explanation, done, limit, improve, search_query }));
+    setLoading(true); setError('');
+    return api.experiment.plan(slim).then(r => setPlans(p => ({ ...p, ...r.plans }))).catch(e => setError(e.message)).finally(() => setLoading(false));
+  };
+  // Only gaps without a saved plan are sent to the AI, so coming back to this page costs nothing.
+  useEffect(() => { const missing = selectedGaps.filter(g => !plans[g.title]); if (missing.length) build(missing); }, [selectedGaps]); // eslint-disable-line react-hooks/exhaustive-deps
+  const ready = selectedGaps.some(g => plans[g.title] && !plans[g.title].error);
   return <>
     <PageHero guide={GUIDE} icon={FlaskConical} tone="teal" chips={['How to overcome the gap', 'Step-by-step plan', 'Datasets, baselines & papers']} title="Experiment plan" description="One complete experiment for each research gap you selected." action={ready && <button className="secondary-btn" onClick={() => download('experiment-plan.md', toMarkdown(selectedGaps, plans), 'text/markdown')}><Download size={15} /> Download plan</button>} />
     {!selectedGaps.length ? <div className="panel empty-state"><FlaskConical size={26} /><strong>No gaps selected</strong><span>Select one or more gaps in Research gaps and they will appear here with a full experiment plan.</span><button className="primary-btn" onClick={() => onNavigate('gaps')}>Go to Research gaps <ArrowRight size={15} /></button></div> : <>
       <section className="panel connected-gap"><div><SectionLabel>SELECTED GAPS</SectionLabel><h3>{selectedGaps.length} gap{selectedGaps.length === 1 ? '' : 's'} selected</h3>{selectedGaps.map(g => <div className="connected-gap-item" key={g.id}><CheckCircle2 size={15} /><span>{g.title}</span></div>)}</div><button className="text-btn" onClick={() => onNavigate('gaps')}>Change gaps</button></section>
       {loading && <Progress steps={['Reading your gaps', 'Designing the experiments', 'Finding reading material']} current={1} />}
       {error && <div className="panel error-box">Could not build the plan: {error}</div>}
-      <div className="plan-list">{!loading && selectedGaps.map((g, i) => { const p = plans[g.title]; if (!p) return null;
-        if (p.error) return <article className="panel plan-card" key={g.id}><header><span className="plan-index">Gap {i + 1}</span><h3>{g.title}</h3></header><div className="error-box inline">Could not build this plan: {p.error}</div></article>;
+      <div className="plan-list">{selectedGaps.map((g, i) => { const p = plans[g.title]; if (!p) return null;
+        if (p.error) return <article className="panel plan-card" key={g.id}><header><span className="plan-index">Gap {i + 1}</span><h3>{g.title}</h3></header><div className="error-box inline">Could not build this plan: {p.error} <button className="text-btn" disabled={loading} onClick={() => build([g])}>Try again</button></div></article>;
         return <article className="panel plan-card" key={g.id}>
           <header><span className="plan-index">Gap {i + 1}</span><h3>{g.title}</h3><p>{g.limit}</p></header>
           <div className="overcome"><h4><Lightbulb size={15} /> How to overcome this gap</h4><p>{p.summary}</p></div>

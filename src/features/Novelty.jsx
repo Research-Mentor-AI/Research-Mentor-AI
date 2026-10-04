@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { CheckCircle2, ExternalLink, Lightbulb, Target, TrendingUp, BookOpen, Compass } from 'lucide-react';
 import { SectionLabel, PageHero, Progress } from '../components/ui';
 import { api } from '../api/client';
+import { usePersist } from '../lib/persist';
 
 const GUIDE = { what: 'Tells you how new your idea is before you spend months on it. Your idea is compared with real published papers, and you get a score out of 100, what has already been done, what is still open, and where you could publish.', steps: [['Enter your idea', 'Paste the problem you want to test.'], ['We compare it with real papers', 'The AI reads the closest published papers.'], ['You see the score and overlap', 'Low, medium or high novelty, with the papers behind it.'], ['You see how to stand out', 'Open angles to own, and journals or conferences to aim for.']] };
 const STEPS = ['Understanding your idea', 'Searching published work', 'Comparing and scoring'];
@@ -13,7 +14,7 @@ function Gauge({ score }) {
 const Block = ({ icon: I, tone, title, items }) => <section className={`panel analysis-block tile tone-${tone}`}><h4><i className="tile-ic"><I size={15} /></i>{title}</h4><ul className="tick-list">{items.map(n => <li key={n}><CheckCircle2 size={15} />{n}</li>)}</ul></section>;
 
 export function Novelty() {
-  const [ps, setPs] = useState(''); const [data, setData] = useState(null); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
+  const [ps, setPs] = usePersist('novelty:ps', ''); const [data, setData] = usePersist('novelty:data', null); const [busy, setBusy] = useState(false); const [error, setError] = useState('');
   const check = async () => { setBusy(true); setError(''); setData(null); try { setData(await api.novelty.check(ps)); } catch (e) { setError(e.message); } finally { setBusy(false); } };
   const tone = !data ? '' : data.score < 40 ? 'low' : data.score <= 80 ? 'medium' : 'high';
   return <>
@@ -23,7 +24,7 @@ export function Novelty() {
     {error && <div className="panel error-box">Could not run the check: {error}</div>}
     {!busy && !data && !error && <div className="panel empty-state"><Target size={26} /><strong>Run the check to see your results</strong><span>You will get a novelty score, what has already been done, what is still open, the closest papers and where to publish.</span></div>}
     {data && !busy && <>
-      <div className={`score-card ${tone}`}><Gauge score={data.score} /><div className="score-verdict"><span>Assessment</span><h3>{data.verdict}</h3><p>{data.summary}</p><small className="scale-note">Below 40 is low, 40 to 80 is medium, above 80 is high.</small></div></div>
+      <div className={`score-card ${tone}`}><Gauge score={data.score} /><div className="score-verdict"><span>Assessment</span><h3>{data.verdict}</h3><p>{data.summary}</p></div></div>
       <div className="novelty-cols">
         {data.already_done.length > 0 && <Block icon={BookOpen} tone="amber" title="Already explored by others" items={data.already_done} />}
         {data.open_angles.length > 0 && <Block icon={Compass} tone="green" title="Still open: your opportunity" items={data.open_angles} />}

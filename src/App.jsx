@@ -13,6 +13,7 @@ import { HelpGuide } from './features/Help';
 import { LandingPage } from './pages/Landing';
 import { api, getToken, setToken } from './api/client';
 import { initials } from './components/ui';
+import { clearPersist, usePersist } from './lib/persist';
 import { LoginPage, SignupPage } from './pages/Auth';
 
 export default function App() {
@@ -21,8 +22,8 @@ export default function App() {
   const [publicPage, setPublicPage] = useState('home');
   const [active, setActive] = useState('dashboard');
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [selectedGaps, setSelectedGaps] = useState([]);
-  const [gapResult, setGapResult] = useState(null);
+  const [selectedGaps, setSelectedGaps] = usePersist('gaps:selected', []);
+  const [gapResult, setGapResult] = usePersist('gaps:result', null);
   const [booting, setBooting] = useState(!!getToken());
   const [user, setUser] = useState(null);
   const [authError, setAuthError] = useState('');
@@ -40,9 +41,9 @@ export default function App() {
     window.addEventListener('rm-logout', out);
     return () => window.removeEventListener('rm-logout', out);
   }, []);
-  const logout = () => { setToken(null); setUser(null); setAuthenticated(false); setPublicPage('home'); setGapResult(null); setSelectedGaps([]); };
+  const logout = () => { setToken(null); setUser(null); setAuthenticated(false); setPublicPage('home'); clearPersist(); };
   const navigate = (id) => { setActive(id); setMobileOpen(false); window.scrollTo({ top: 0, behavior: 'smooth' }); };
-  const start = (text) => { setSeedPs(text); navigate('explore'); };
+  const start = (text) => { clearPersist('explore'); setSeedPs(text); navigate('explore'); };
 
   if (booting) return <div className="boot">Loading…</div>;
   if (!authenticated) {
@@ -60,7 +61,7 @@ export default function App() {
         <div className="top-actions"><button className="icon-button" onClick={() => navigate('help')} aria-label="Help"><CircleHelp size={19} /></button><span className="avatar" title={user.name}>{initials(user.name)}</span></div>
       </header>
       <div className="content">
-        {active === 'dashboard' && <Dashboard user={user} onNavigate={navigate} onStart={start} />}
+        {active === 'dashboard' && <Dashboard user={user} onNavigate={navigate} onStart={start} notify={notify} />}
         {active === 'explore' && <Explore key={seedPs} initialPs={seedPs} />}
         {active === 'gaps' && <Gaps selectedGaps={selectedGaps} setSelectedGaps={setSelectedGaps} result={gapResult} setResult={setGapResult} file={gapFile} setFile={setGapFile} onNavigate={navigate} notify={notify} />}
         {active === 'experiment' && <Experiment selectedGaps={selectedGaps} onNavigate={navigate} notify={notify} />}
