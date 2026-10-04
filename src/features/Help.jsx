@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Check, CircleHelp, Sparkles } from 'lucide-react';
 import { SectionLabel, PageTitle } from '../components/ui';
-import { papers, gaps, mentors } from '../data/mock';
 
 export function HelpGuide({onNavigate}) {
   const sections=[['1','Start with Explore','Enter a clear problem statement. Refine it, read the generated topic context, then inspect related papers before moving forward.'],['2','Check novelty','Submit your problem statement and compare similarity evidence with the closest papers. A score is an aid for investigation, not proof of novelty.'],['3','Find research gaps','Upload a paper or use papers from Explore. Read each evidence-backed gap and open its source excerpts before selecting one or more gaps.'],['4','Build the experiment plan','Review the connected gaps, then choose datasets, baselines and evaluation metrics. Keep every choice linked to a source.'],['5','Draft the paper','Draft section by section, inspect citations, edit the generated text, and verify every reference before academic use.'],['6','Use mentors when needed','Book a mentor for gap review, experiment-plan review or draft review. Prepare your selected evidence before the session.']];
