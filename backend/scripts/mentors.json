@@ -1,0 +1,72 @@
+[
+  {
+    "name": "Dr. Sarah Johnson",
+    "role": "Professor, Computer Vision",
+    "bio": "10+ years of experience in computer vision and medical image analysis.",
+    "expertise": ["Computer Vision", "Deep Learning", "Medical Imaging"],
+    "price": 1200
+  },
+  {
+    "name": "Dr. Michael Chen",
+    "role": "Research Scientist, Natural Language Processing",
+    "bio": "Works on large language models, retrieval systems, and conversational AI.",
+    "expertise": ["NLP", "LLMs", "RAG", "Transformers"],
+    "price": 1500
+  },
+  {
+    "name": "Dr. Priya Sharma",
+    "role": "Assistant Professor, Machine Learning",
+    "bio": "Specializes in predictive modeling, feature engineering, and MLOps.",
+    "expertise": ["Machine Learning", "Data Science", "MLOps"],
+    "price": 1000
+  },
+  {
+    "name": "Dr. David Kim",
+    "role": "Senior Researcher, Reinforcement Learning",
+    "bio": "Focuses on decision-making systems and autonomous agents.",
+    "expertise": ["Reinforcement Learning", "AI Agents", "Optimization"],
+    "price": 1400
+  },
+  {
+    "name": "Dr. Emily Rodriguez",
+    "role": "Associate Professor, Data Mining",
+    "bio": "Research interests include knowledge discovery and graph analytics.",
+    "expertise": ["Data Mining", "Knowledge Graphs", "Big Data"],
+    "price": 900
+  },
+  {
+    "name": "Dr. Ahmed Hassan",
+    "role": "Research Scientist, Generative AI",
+    "bio": "Works on diffusion models, multimodal AI, and generative systems.",
+    "expertise": ["Generative AI", "Diffusion Models", "Multimodal AI"],
+    "price": 1600
+  },
+  {
+    "name": "Dr. Lisa Thompson",
+    "role": "Professor, Cybersecurity",
+    "bio": "Expert in network security, privacy, and adversarial machine learning.",
+    "expertise": ["Cybersecurity", "Privacy", "Adversarial AI"],
+    "price": 1300
+  },
+  {
+    "name": "Dr. Robert Williams",
+    "role": "Research Fellow, Robotics",
+    "bio": "Develops intelligent robotic systems for industrial applications.",
+    "expertise": ["Robotics", "Computer Vision", "Autonomous Systems"],
+    "price": 1100
+  },
+  {
+    "name": "Dr. Ananya Gupta",
+    "role": "Associate Professor, Explainable AI",
+    "bio": "Researches interpretable machine learning and responsible AI.",
+    "expertise": ["Explainable AI", "Responsible AI", "Machine Learning"],
+    "price": 950
+  },
+  {
+    "name": "Dr. James Wilson",
+    "role": "Senior Data Scientist, Applied AI",
+    "bio": "Industry expert in deploying AI solutions at scale.",
+    "expertise": ["Applied AI", "Data Science", "Cloud AI"],
+    "price": 1250
+  }
+]
