@@ -36,9 +36,9 @@ async def fake_chat_json(system, user, *, task="", model=None, max_tokens=0, tem
     raise AssertionError(f"unexpected task {task}")
 
 
-async def fake_search_works(client, query, per_page=25):
-    key = abs(hash(query)) % 9999
-    return [{"id": f"W{key}-{i}", "title": f"{query.title()} study {i}", "abstract": "This paper studies the problem in depth. " * 5, "year": 2025 - i % 4,
-             "date": f"{2025 - i % 4}-03-1{i % 9}", "citations": 300 - i * 7, "venue": ["IEEE Access", "CVPR", "arXiv"][i % 3], "publisher": ["IEEE", "IEEE", "arXiv"][i % 3],
-             "type": ["Journal", "Conference", "Preprint"][i % 3], "url": f"https://example.org/{key}/{i}", "doi": f"https://doi.org/10.1/{key}.{i}", "authors": "A. Author, B. Writer"}
+async def fake_search_works(client, query, per_page=25, kind="journal"):
+    key = abs(hash((query, kind))) % 9999
+    return [{"id": f"W{key}-{i}", "title": f"{query.title()} {kind} study {i}", "abstract": "This paper studies the problem in depth. " * 5, "year": 2025 - i % 4,
+             "date": f"{2025 - i % 4}-03-1{i % 9}", "citations": 300 - i * 7, "venue": "CVPR" if kind == "conference" else "IEEE Access", "publisher": "IEEE",
+             "type": "Conference" if kind == "conference" else "Journal", "url": f"https://example.org/{key}/{i}", "doi": f"https://doi.org/10.1/{key}.{i}", "authors": "A. Author, B. Writer"}
             for i in range(12)]

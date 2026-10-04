@@ -19,6 +19,7 @@ def test_auth(client):
 def test_explore_pagination(client, auth):
     r = client.post("/api/explore/analyze", json={"problem_statement": PS}, headers=auth).json()
     assert len(r["papers"]) == 10 and r["has_more"] and r["domain"] and r["objectives"]
+    assert {p["type"] for p in r["papers"]} == {"Journal", "Conference"}   # both kinds, never preprints
     scores = [p["similarity"] for p in r["papers"]]
     assert scores == sorted(scores, reverse=True)
     assert {"title", "publisher", "year", "date", "type", "citations", "url", "venue"} <= set(r["papers"][0])

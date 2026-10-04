@@ -15,12 +15,12 @@ async def check(b: Problem, user: dict = Depends(auth.current_user)):
     ps = b.problem_statement.strip()
     if len(ps) < 15:
         raise HTTPException(422, "Please describe your idea in at least one full sentence.")
-    plan = await llm.chat_json(prompts.SYSTEM, prompts.queries(ps), task="queries", model=config.FAST_MODEL, max_tokens=500, temperature=0.2)
+    plan = await llm.chat_json(prompts.SYSTEM, prompts.queries(ps), task="queries", model=config.FAST_MODEL, max_tokens=config.TOKENS["queries"], temperature=0.2)
     cands = await scholar.gather_candidates(as_list(plan.get("search_queries"))[:4] or [ps[:150]], 20, per_query=15)
     if not cands:
         raise HTTPException(404, "No related papers were found, so novelty cannot be judged. Try rewording your idea.")
     core = str(plan.get("core_idea", "")).strip()
-    r = await llm.chat_json(prompts.SYSTEM, prompts.novelty(ps, core, cands), task="novelty", max_tokens=4500)
+    r = await llm.chat_json(prompts.SYSTEM, prompts.novelty(ps, core, cands), task="novelty", max_tokens=config.TOKENS["novelty"])
     papers = []
     for item in r.get("papers", []):
         i = item.get("i") if isinstance(item, dict) else None

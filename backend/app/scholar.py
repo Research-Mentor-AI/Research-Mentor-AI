@@ -1,5 +1,5 @@
 """Real papers from OpenAlex (free scholarly index). The LLM never invents papers."""
-import asyncio, re
+import asyncio, re, time
 import httpx
 from . import config
 
@@ -11,6 +11,24 @@ class ScholarError(Exception):
     pass
 
 
+_CACHE: dict[tuple, tuple[float, list]] = {}   # same search twice = no second charge from OpenAlex
+CACHE_TTL = 3600
+
+
+def explain(e: Exception) -> str:
+    """Turn an OpenAlex failure into a message a student or developer can act on."""
+    if isinstance(e, httpx.HTTPStatusError):
+        code = e.response.status_code
+        if code in (402, 403, 409, 429):
+            return ("OpenAlex refused the request: the daily free limit is used up, or an API key is needed. "
+                    "Add a free OPENALEX_API_KEY to backend/.env (get it at openalex.org/settings/api), "
+                    "or try again after midnight UTC.")
+        if code == 401:
+            return "OpenAlex rejected the OPENALEX_API_KEY. Check that it is copied correctly."
+        return f"OpenAlex returned an error ({code}). Please try again."
+    return "Could not connect to OpenAlex. Check the server's internet connection."
+
+
 def _abstract(inv) -> str:
     if not inv:
         return ""
@@ -19,7 +37,7 @@ def _abstract(inv) -> str:
 
 
 def _kind(src: dict) -> str:
-    return {"conference": "Conference", "journal": "Journal", "repository": "Preprint"}.get((src or {}).get("type"), "Other")
+    return {"conference": "Conference", "journal": "Journal"}.get((src or {}).get("type"), "Other")
 
 
 def normalize(w: dict) -> dict:
@@ -35,17 +53,41 @@ def normalize(w: dict) -> dict:
     }
 
 
-async def search_works(client: httpx.AsyncClient, query: str, per_page: int = 25) -> list[dict]:
-    params = {"search": query, "filter": "has_abstract:true,type:article|preprint", "per-page": per_page, "select": SELECT}
-    if config.OPENALEX_EMAIL:
-        params["mailto"] = config.OPENALEX_EMAIL
-    r = await client.get(API, params=params)
+async def _get(client: httpx.AsyncClient, params: dict) -> httpx.Response:
+    for attempt in (0, 1):   # one retry for a network blip or a server error
+        try:
+            r = await client.get(API, params=params)
+        except httpx.TransportError:
+            if attempt:
+                raise
+        else:
+            if r.status_code < 500 or attempt:
+                return r
+        await asyncio.sleep(1)
+
+
+async def search_works(client: httpx.AsyncClient, query: str, per_page: int = 25, kind: str = "journal") -> list[dict]:
+    """Search OpenAlex. kind is "journal" or "conference": preprints and repositories are left out on purpose."""
+    ck = (query, kind, per_page)
+    hit = _CACHE.get(ck)
+    if hit and time.time() - hit[0] < CACHE_TTL:
+        return hit[1]
+    params = {"search": query, "filter": f"has_abstract:true,primary_location.source.type:{kind}", "per-page": per_page, "select": SELECT}
+    if config.OPENALEX_API_KEY:
+        params["api_key"] = config.OPENALEX_API_KEY
+    r = await _get(client, params)
+    if r.status_code == 400:   # filter not accepted: search everything and drop other types below
+        params["filter"] = "has_abstract:true"
+        r = await _get(client, params)
     r.raise_for_status()
     out = []
     for w in r.json().get("results", []):
         p = normalize(w)
-        if p["title"] and len(p["abstract"]) >= 80:
+        if p["title"] and len(p["abstract"]) >= 80 and p["type"] in ("Journal", "Conference"):
             out.append(p)
+    if len(_CACHE) > 500:
+        _CACHE.pop(min(_CACHE, key=lambda k: _CACHE[k][0]))
+    _CACHE[ck] = (time.time(), out)
     return out
 
 
@@ -59,10 +101,11 @@ async def gather_candidates(queries: list[str], pool: int, per_query: int = 25, 
     if not queries:
         return []
     async with httpx.AsyncClient(timeout=30, headers={"User-Agent": "ResearchMentorAI/1.0"}) as c:
-        results = await asyncio.gather(*[search_works(c, q, per_query) for q in queries], return_exceptions=True)
+        # every query is searched for journal AND conference papers so both always appear
+        results = await asyncio.gather(*[search_works(c, q, per_query, kind) for q in queries for kind in ("conference", "journal")], return_exceptions=True)
     ok = [r for r in results if not isinstance(r, Exception)]
     if not ok:
-        raise ScholarError("Could not reach the paper index (OpenAlex). Check the server's internet connection.")
+        raise ScholarError(explain(next(r for r in results if isinstance(r, Exception))))
     seen, out = {_key(exclude_title)} if exclude_title else set(), []
     for rank in range(per_query):
         for lst in ok:

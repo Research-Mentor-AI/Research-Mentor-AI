@@ -72,9 +72,13 @@ async def chat_json(system: str, user: str, *, task: str = "", model: str | None
             continue
         if r.status_code >= 400:
             raise LLMError(f"OpenRouter error {r.status_code}: {r.text[:200]}")
+        data = r.json()
         try:
-            return parse_json(_content(r.json()))
+            return parse_json(_content(data))
         except (ValueError, KeyError, IndexError):
             last = "the model returned invalid JSON"
             body["temperature"] = 0.1
+            if (data.get("choices") or [{}])[0].get("finish_reason") == "length":   # answer was cut off: allow more room
+                last = "the answer was too long for the output limit"
+                body["max_tokens"] = min(body["max_tokens"] * 2, config.MAX_OUTPUT_TOKENS)
     raise LLMError(f"The AI could not complete this request: {last}. Please try again.")

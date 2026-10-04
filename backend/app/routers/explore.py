@@ -1,3 +1,4 @@
+import asyncio
 from fastapi import APIRouter, Depends, HTTPException, Query
 from pydantic import BaseModel
 from .. import auth, cache, config, llm, prompts, scholar
@@ -23,14 +24,33 @@ def clamp(n, default=0) -> int:
         return default
 
 
+BATCH = 10   # papers scored per AI call: small batches are far more reliable than one big list
+
+
+async def _score_batch(ps: str, batch: list[dict]) -> dict[int, tuple[int, str]]:
+    """Score up to BATCH papers. Any paper the model skips is asked about once more."""
+    scores: dict[int, tuple[int, str]] = {}
+    todo = list(range(len(batch)))
+    for _ in range(2):
+        sub = [batch[i] for i in todo]
+        res = await llm.chat_json(prompts.SYSTEM, prompts.rank(ps, sub), task="rank", model=config.FAST_MODEL, max_tokens=config.TOKENS["rank"], temperature=0.1)
+        for s in res.get("scores", []):
+            if isinstance(s, dict) and isinstance(s.get("i"), int) and 0 <= s["i"] < len(sub) and s.get("score") is not None:
+                scores[todo[s["i"]]] = (clamp(s["score"]), str(s.get("reason", "")).strip())
+        todo = [i for i in todo if i not in scores]
+        if not todo:
+            break
+    return scores
+
+
 async def rank_papers(ps: str, cands: list[dict]) -> list[dict]:
-    """LLM scores every candidate 0-100 against the problem; returns them best first."""
-    res = await llm.chat_json(prompts.SYSTEM, prompts.rank(ps, cands), task="rank", model=config.FAST_MODEL, max_tokens=4000, temperature=0.1)
-    scores = {}
-    for s in res.get("scores", []):
-        if isinstance(s, dict) and isinstance(s.get("i"), int):
-            scores[s["i"]] = (clamp(s.get("score")), str(s.get("reason", "")).strip())
-    ranked = [{**p, "similarity": scores.get(i, (0, ""))[0], "reason": scores.get(i, (0, ""))[1]} for i, p in enumerate(cands)]
+    """LLM scores every candidate 0-100 against the problem; best first.
+    A paper the AI never scored is dropped, never shown with a made-up 0%."""
+    batches = [cands[i:i + BATCH] for i in range(0, len(cands), BATCH)]
+    results = await asyncio.gather(*[_score_batch(ps, b) for b in batches])
+    ranked = [{**p, "similarity": sc[i][0], "reason": sc[i][1]} for b, sc in zip(batches, results) for i, p in enumerate(b) if i in sc]
+    if not ranked:
+        raise llm.LLMError("The AI could not score the papers. Please try again.")
     return sorted(ranked, key=lambda p: p["similarity"], reverse=True)
 
 
@@ -45,7 +65,7 @@ async def analyze(b: Problem, user: dict = Depends(auth.current_user)):
     ps = b.problem_statement.strip()
     if len(ps) < 15:
         raise HTTPException(422, "Please describe your problem in at least one full sentence.")
-    a = await llm.chat_json(prompts.SYSTEM, prompts.explore(ps), task="explore", max_tokens=3000)
+    a = await llm.chat_json(prompts.SYSTEM, prompts.explore(ps), task="explore", max_tokens=config.TOKENS["explore"])
     queries = as_list(a.get("search_queries"))[:4] or [ps[:150]]
     cands = await scholar.gather_candidates(queries, config.EXPLORE_POOL)
     pool = await rank_papers(ps, cands) if cands else []

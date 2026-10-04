@@ -14,6 +14,8 @@ async def lifespan(app: FastAPI):
     db.init()
     if not config.OPENROUTER_API_KEY:
         log.warning("OPENROUTER_API_KEY is not set: AI features will return an error.")
+    if not config.OPENALEX_API_KEY:
+        log.warning("OPENALEX_API_KEY is not set: paper search will hit OpenAlex's tiny keyless daily limit.")
     yield
 
 
@@ -35,4 +37,4 @@ async def scholar_error(_: Request, e: scholar.ScholarError):
 
 @app.get("/api/health")
 def health():
-    return {"ok": True, "llm_configured": bool(config.OPENROUTER_API_KEY), "model": config.MODEL, "fast_model": config.FAST_MODEL}
+    return {"ok": True, "llm_configured": bool(config.OPENROUTER_API_KEY), "openalex_key_configured": bool(config.OPENALEX_API_KEY), "model": config.MODEL, "fast_model": config.FAST_MODEL}

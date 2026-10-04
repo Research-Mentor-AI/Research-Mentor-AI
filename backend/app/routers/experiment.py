@@ -2,7 +2,7 @@ import asyncio
 from urllib.parse import quote_plus
 from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
-from .. import auth, llm, prompts, scholar
+from .. import auth, config, llm, prompts, scholar
 from .explore import as_list
 
 router = APIRouter(prefix="/api/experiment", tags=["experiment"])
@@ -22,7 +22,7 @@ def named(items, key="name") -> list[dict]:
 
 
 async def plan_one(g: dict) -> dict:
-    p = await llm.chat_json(prompts.SYSTEM, prompts.experiment(g), task="experiment", max_tokens=5000)
+    p = await llm.chat_json(prompts.SYSTEM, prompts.experiment(g), task="experiment", max_tokens=config.TOKENS["experiment"])
     steps = [{"phase": str(s.get("phase", "")).strip(), "tasks": as_list(s.get("tasks")), "outcome": str(s.get("outcome", "")).strip()} for s in p.get("steps", []) if isinstance(s, dict)]
     datasets = named(p.get("datasets"))
     baselines = named(p.get("baselines"))

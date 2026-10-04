@@ -18,7 +18,7 @@ def ref_line(i: int, p: dict) -> str:
 
 
 async def one(name: str, f: dict, refs_text: str) -> str:
-    r = await llm.chat_json(prompts.SYSTEM, prompts.section(name, f, refs_text), task="writer", max_tokens=1800, temperature=0.4)
+    r = await llm.chat_json(prompts.SYSTEM, prompts.section(name, f, refs_text), task="writer", max_tokens=config.TOKENS.get(name, config.TOKENS["section_default"]), temperature=0.4)
     return str(r.get("text", "")).strip()
 
 
@@ -33,7 +33,7 @@ async def draft(b: DraftIn, user: dict = Depends(auth.current_user)):
     if user_refs:
         ref_lines = [f"[{i + 1}] {r}" for i, r in enumerate(user_refs)]
     elif NEEDS_REFS & set(sections):   # no references given: suggest real ones from OpenAlex
-        plan = await llm.chat_json(prompts.SYSTEM, prompts.queries(f"{f['title']}. {f['problem']}"), task="queries", model=config.FAST_MODEL, max_tokens=500, temperature=0.2)
+        plan = await llm.chat_json(prompts.SYSTEM, prompts.queries(f"{f['title']}. {f['problem']}"), task="queries", model=config.FAST_MODEL, max_tokens=config.TOKENS["queries"], temperature=0.2)
         try:
             found = await scholar.gather_candidates(as_list(plan.get("search_queries"))[:3], 8, per_query=10)
         except scholar.ScholarError:

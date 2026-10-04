@@ -18,7 +18,7 @@ def clean_gap(g: dict, n: int, text_norm: str) -> dict:
 @router.post("/detect")
 async def detect(file: UploadFile = File(...), user: dict = Depends(auth.current_user)):
     text = docs.extract_text(file.filename or "", await file.read())
-    res = await llm.chat_json(prompts.SYSTEM, prompts.gaps(docs.shorten(text)), task="gaps", max_tokens=6000)
+    res = await llm.chat_json(prompts.SYSTEM, prompts.gaps(docs.shorten(text)), task="gaps", max_tokens=config.TOKENS["gaps"])
     tn = docs.norm(text)
     paper = {"title": str((res.get("paper") or {}).get("title", file.filename)).strip(), "summary": str((res.get("paper") or {}).get("summary", "")).strip()}
     gaps = [clean_gap(g, i, tn) for i, g in enumerate(res.get("gaps", [])[:6]) if isinstance(g, dict)]
@@ -29,7 +29,7 @@ async def detect(file: UploadFile = File(...), user: dict = Depends(auth.current
     found = await asyncio.gather(*[scholar.gather_candidates([g["search_query"] or g["title"]], 8, per_query=12, exclude_title=paper["title"]) for g in gaps], return_exceptions=True)
     cands = [f if not isinstance(f, Exception) else [] for f in found]
     if any(cands):
-        sup = await llm.chat_json(prompts.SYSTEM, prompts.support(gaps, cands), task="support", model=config.FAST_MODEL, max_tokens=3500, temperature=0.1)
+        sup = await llm.chat_json(prompts.SYSTEM, prompts.support(gaps, cands), task="support", model=config.FAST_MODEL, max_tokens=config.TOKENS["support"], temperature=0.1)
         by_id = {s.get("id"): s.get("supporting", []) for s in sup.get("gaps", []) if isinstance(s, dict)}
     else:
         by_id = {}
