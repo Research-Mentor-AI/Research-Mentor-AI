@@ -100,3 +100,181 @@ label.gap-select{cursor:pointer}
 .error-box.inline{margin:0}.note-box{width:100%;border:1px solid var(--line);border-radius:10px;padding:10px 12px;margin:10px 0;font-family:inherit;resize:vertical}.slot-grid button:disabled{opacity:.45;cursor:not-allowed;text-decoration:line-through}.text-btn.full{width:100%;margin-top:6px}
 @media(max-width:1000px){.plan-grid.three,.reading{grid-template-columns:1fr}}
 .papers-col{position:static!important}
+
+/* ===== READABILITY FONT UPGRADE ===== */
+body{font-size:15px}
+
+/* Landing page */
+.landing-nav{height:88px}
+.landing-links{font-size:14px;gap:34px}
+.landing-login,.landing-signup,.landing-secondary{font-size:13px;padding:11px 14px}
+.landing-brand{font-size:18px}
+.landing-brand small{font-size:10px}
+.eyebrow-pill{font-size:10px;padding:8px 12px}
+.hero-copy>p{font-size:15px;line-height:1.85}
+.landing-primary{font-size:13px;padding:13px 18px}
+.hero-proof{font-size:10px}
+.landing-stats strong{font-size:30px}
+.landing-stats span{font-size:10px}
+.section-intro>span{font-size:10px}
+.section-intro p{font-size:13px}
+.feature-grid h3{font-size:15px}
+.feature-grid p{font-size:11px}
+.workflow-line b{font-size:12px}
+.workflow-line span{font-size:14px}
+.workflow-line small{font-size:10px}
+.plans-grid small{font-size:9px}
+.plans-grid h3{font-size:22px}
+.plans-grid strong{font-size:29px}
+.plans-grid p{font-size:11px}
+.plans-grid button{font-size:12px}
+.plan-badge{font-size:8px}
+.landing-cta h2{font-size:30px}
+.landing-cta p{font-size:11px}
+.landing-cta button{font-size:12px}
+.landing-footer{font-size:10px}
+
+/* Workspace navigation */
+.topbar{height:70px}
+.crumbs{font-size:12px}
+.nav-label{font-size:10px}
+.nav-item{font-size:13px;padding:11px 12px}
+.new-project{font-size:13px}
+.trust-box strong{font-size:11px}
+.trust-box span{font-size:10px}
+.user-mini strong{font-size:12px}
+.user-mini span{font-size:10px}
+
+/* Common workspace typography */
+.eyebrow,.section-label{font-size:10px}
+.project-head h1{font-size:31px}
+.project-head p,.page-title p{font-size:13px}
+.primary-btn,.secondary-btn,.text-btn{font-size:12px;padding:10px 14px}
+.pipeline-copy span{font-size:10px}
+.pipeline-copy strong{font-size:12px}
+.pipeline-step{font-size:11px}
+.step-circle{font-size:10px}
+.page-title h2{font-size:25px}
+.panel-head h3,.section-heading h3,.right-head h3{font-size:16px}
+
+/* Dashboard */
+.hero-card h2{font-size:28px}
+.hero-card p{font-size:13px}
+.hero-input input{font-size:12px}
+.hero-card>small{font-size:10px}
+.quick-card strong{font-size:12px}
+.quick-card span{font-size:17px}
+.quick-card small{font-size:10px}
+.flow-node strong{font-size:12px}
+.flow-node span{font-size:10px}
+.mini-paper strong{font-size:11px}
+.mini-paper span{font-size:10px}
+.project-card h3{font-size:15px}
+.project-card>span{font-size:11px}
+.progress-number{font-size:15px}
+.stat-card span{font-size:10px}
+.stat-card strong{font-size:21px}
+.stat-card small{font-size:10px}
+.grounding-note{font-size:11px}
+
+/* Explore / research */
+.ps-head{font-size:10px}
+.ps-card p{font-size:13px}
+.ps-card textarea{font-size:12px}
+.ai-head strong{font-size:12px}
+.ai-head small{font-size:10px}
+.ai-info p{font-size:12px}
+.concepts span,.type-badge{font-size:10px}
+.filter-chips button,.filters select{font-size:10px}
+.paper-title-row h3{font-size:13px}
+.similarity-badge{font-size:10px}
+.paper-main>p,.paper-meta a,.table-wrap a{font-size:10px}
+.upload-zone strong{font-size:12px}
+.upload-zone span,.upload-actions>span{font-size:10px}
+.result-count{font-size:10px}
+.gap-top h3{font-size:16px}
+.gap-number{font-size:13px}
+.evidence{font-size:10px}
+.gap-lines p{font-size:11px}
+.gap-source>a{font-size:10px}
+.selection-banner strong{font-size:12px}
+.selection-banner span{font-size:10px}
+.gap-select{font-size:10px}
+.connected-gap h3{font-size:16px}
+.connected-gap-item{font-size:11px}
+.insight-grid strong,.insight-grid span{font-size:10px}
+.sticky-action>span,.bottom-action>span{font-size:10px}
+
+/* Experiment / novelty / writer */
+.check-main strong{font-size:11px}
+.check-main small{font-size:10px}
+.citation-chip{font-size:9px}
+.novelty-input label{font-size:11px}
+.novelty-input textarea{font-size:12px}
+.novelty-input>span{font-size:10px}
+.score-ring strong{font-size:29px}
+.score-ring span{font-size:9px}
+.score-verdict span{font-size:10px}
+.score-verdict h3{font-size:22px}
+.score-verdict p{font-size:11px}
+.legend-items span{font-size:10px}
+th{font-size:9px}
+td,td strong{font-size:11px}
+.editor-tabs button{font-size:11px}
+.editor-toolbar{font-size:10px}
+.editor-panel textarea{font-size:13px}
+.editor-footer{font-size:10px}
+.verified-count{font-size:10px}
+.citation strong{font-size:11px}
+.citation small{font-size:10px}
+
+/* Mentors / projects */
+.search-box input{font-size:11px}
+.mentor-card h3{font-size:16px}
+.mentor-card p{font-size:11px}
+.verified{font-size:9px}
+.rating{font-size:11px}
+.mentor-tags span{font-size:9px}
+.mentor-actions .primary-btn,.mentor-actions .secondary-btn{font-size:11px}
+.mentor-review h3{font-size:16px}
+.mentor-review p{font-size:11px}
+.upcoming h3{font-size:16px}
+.upcoming-session strong{font-size:12px}
+.upcoming-session span{font-size:10px}
+
+/* Help */
+.help-hero h2{font-size:31px}
+.help-hero p{font-size:13px}
+.help-visual span{font-size:10px}
+.help-card h3{font-size:15px}
+.help-card p{font-size:11px}
+.faq-grid strong{font-size:11px}
+.faq-grid p{font-size:10px}
+
+/* Authentication */
+.auth-back{font-size:11px}
+.auth-brand{font-size:15px}
+.auth-brand small{font-size:9px}
+.auth-promo h2{font-size:46px}
+.auth-promo>p{font-size:13px}
+.auth-flow{font-size:10px}
+.auth-card h1{font-size:27px}
+.auth-card>p{font-size:11px}
+.auth-card>label{font-size:10px}
+.auth-card input:not([type=checkbox]){font-size:11px}
+.auth-row .text-btn{font-size:10px}
+.auth-divider{font-size:10px}
+.auth-google{font-size:11px}
+.auth-switch{font-size:11px}
+
+/* Mobile readability */
+@media(max-width:680px){
+  .landing-links{font-size:14px}
+  .hero-copy h1{font-size:42px}
+  .hero-copy>p{font-size:14px}
+  .landing-stats strong{font-size:26px}
+  .section-intro h2{font-size:29px}
+  .section-intro p{font-size:12px}
+  .project-head h1{font-size:25px}
+  .page-title h2{font-size:23px}
+}
