@@ -67,6 +67,8 @@ Our Problem
 How can we build an intelligent research platform that guides a researcher from an initial idea to a structured and evidence-supported research plan?
 
 
+
+
 💡 Our Solution
 
 Research Mentor AI provides a multi-agent research workflow.
