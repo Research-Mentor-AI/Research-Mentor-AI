@@ -429,8 +429,6 @@ Paper Writing Tools
 
 Writing assistance
 
-Research Mentor AI
-
 End-to-end research workflow
 
 The goal is not to compete with every existing tool individually.
